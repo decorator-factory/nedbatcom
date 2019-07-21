@@ -177,7 +177,7 @@ class Tag(ModelMixin, models.Model):
     name = models.CharField(max_length=50, null=True)
     about = models.TextField(null=True)
     sidebar = models.BooleanField()
-    #related = models.ManyToManyField('self') # TODO
+    related = models.ManyToManyField('self')
     # TODO: there's a <tag> thingy too, but that seems really redundant...
 
     class Meta:
@@ -196,6 +196,14 @@ class Tag(ModelMixin, models.Model):
             tag.about = cat.find('about').text
             tag.sidebar = cat.get('sidebar', '') == 'y'
             tag.save()
+
+        for cat_elt in root.findall('category'):
+            tag = Tag.objects.get(tag=cat_elt.get('id'))
+            for reltag in cat_elt.findall('related'):
+                print("Related! {} -> {}".format(tag.tag, reltag.text))
+                rel_tag = Tag.objects.get(tag=tag.tag)
+                tag.related.add(rel_tag)
+                tag.save()
 
     def permaurl(self):
         return "/blog/tag/%s.html" % self.tag

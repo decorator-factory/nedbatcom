@@ -16,6 +16,10 @@
             {% endif %}
         </p>
 
+        {% if tag.relate|length > 0 %}
+        <p>There are related tags!</p>
+        {% endif %}
+
         <div class='category'>
             {% for entry in entries %}
                 <p class='date'>{{entry.when|date:"j M Y"}}:</p>
