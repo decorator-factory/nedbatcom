@@ -16,10 +16,16 @@
             {% endif %}
         </p>
 
-        {% if tag.relate|length > 0 %}
+        {#
+        {% if tag.related.all|length > 0 %}
         <p>There are related tags!</p>
         {% endif %}
-
+#}
+        {#
+        {% for reltag in tag.related.all %}
+        X
+        {% endfor %}
+#}
         <div class='category'>
             {% for entry in entries %}
                 <p class='date'>{{entry.when|date:"j M Y"}}:</p>
