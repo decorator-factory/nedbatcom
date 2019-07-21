@@ -202,7 +202,6 @@ class Tag(ModelMixin, models.Model):
             for reltag in cat_elt.findall('related'):
                 rel_tag = Tag.objects.get(tag=reltag.text)
                 tag.related.add(rel_tag)
-                tag.save()
 
     def permaurl(self):
         return "/blog/tag/%s.html" % self.tag

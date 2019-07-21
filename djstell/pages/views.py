@@ -98,7 +98,7 @@ def archiveall(request):
     return render_to_response('blogarchive.html', c)
 
 def tags(request):
-    tags = Tag.objects.all().order_by('name')
+    tags = Tag.objects.select_related().all().order_by('name')
     c = {}
     c['tags'] = tags
     c['min_date'] = Entry.objects.all().order_by('when')[0].when
@@ -109,7 +109,7 @@ def tags(request):
     return render_to_response('alltags.html', c)
 
 def tag(request, slug):
-    tag = Tag.objects.get(tag=slug)
+    tag = Tag.objects.select_related().get(tag=slug)
     ents = tag.entry_set.filter(draft=False).order_by('-when')
     c = {}
     add_entries(c, ents)
