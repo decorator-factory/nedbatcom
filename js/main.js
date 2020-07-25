@@ -1,7 +1,7 @@
 // Ned Batchelder's Javascript code.
 // http://nedbatchelder.com
 
-function nospam(user,domain,args) {
+function nospam(user, domain, args) {
 	var ch = String.fromCharCode;
 	var loc = "ma" + ch(105) + "lto" + ch(58) + user + ch(64) + domain;
 	if (args) {
@@ -28,23 +28,26 @@ jQuery(function($){
     });
 });
 
-jQuery(function($){
-    var thisdate = new Date().toJSON().slice(5,10).replace('-', '');
-    $(".thisdate").attr("href", "/blog/archive/date" + thisdate + ".html");
-});
+window.addEventListener("DOMContentLoaded", function (event) {
+    var thisdate = new Date().toJSON().slice(5,10).replace("-", "");
+    document.querySelectorAll(".thisdate").forEach(function (clicky) {
+        clicky.href = "/blog/archive/date" + thisdate + ".html";
+    });
 
-jQuery(function ($) {
     var storage = window.localStorage;
 
     if (storage.getItem("othermode") == "true") {
-        $("html").toggleClass("othermode");
+        document.querySelector("html").classList.toggle("othermode");
     }
 
-    $(".othermode-switch").click(function () {
-        storage.setItem(
-            "othermode",
-            (storage.getItem("othermode") == "true") ? "false" : "true"
-        );
-        $("html").toggleClass("othermode");
+    var otherswitches = document.querySelectorAll(".othermode-switch");
+    otherswitches.forEach(function (otherswitch) {
+        otherswitch.addEventListener("click", function (event) {
+            storage.setItem(
+                "othermode",
+                (storage.getItem("othermode") == "true") ? "false" : "true"
+            );
+            document.querySelector("html").classList.toggle("othermode");
+        });
     });
 });
